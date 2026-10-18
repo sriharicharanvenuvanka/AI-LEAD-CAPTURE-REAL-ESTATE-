@@ -1,0 +1,1805 @@
+{
+  "name": "AI Lead Qualification P1",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "leadcapture",
+        "options": {}
+      },
+      "id": "2df4559c-1664-451a-b21a-742e81c6bf0a",
+      "name": "Webhook",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.2,
+      "position": [
+        -880,
+        -160
+      ],
+      "webhookId": "584008fc-73e6-4c0b-a8ad-13eca797237e"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "a1b0a2d3-e19e-4c6b-99cb-23528f02a902",
+              "name": "body.fullName",
+              "value": "={{ $json.body.fullName }}",
+              "type": "string"
+            },
+            {
+              "id": "8fb23103-826b-4f8f-ab17-68aa89c021c6",
+              "name": "body.email",
+              "value": "={{ $json.body.email }}",
+              "type": "string"
+            },
+            {
+              "id": "a91646a7-968f-4530-8304-453c222cc649",
+              "name": "body.phone",
+              "value": "={{ $json.body.phone }}",
+              "type": "string"
+            },
+            {
+              "id": "db03e766-9a97-4c06-8282-c6e69e3fd143",
+              "name": "body.location",
+              "value": "={{ $json.body.location }}",
+              "type": "string"
+            },
+            {
+              "id": "f55cb55c-3c72-43cd-bfa2-cfceecc15879",
+              "name": "body.propertyType",
+              "value": "={{ $json.body.propertyType }}",
+              "type": "string"
+            },
+            {
+              "id": "e5695d2b-bd04-4aee-a106-b113a1a04523",
+              "name": "body.configuration",
+              "value": "={{ $json.body.configuration }}",
+              "type": "string"
+            },
+            {
+              "id": "76bd2e64-831b-4fc6-8aed-605e9cfd200b",
+              "name": "body.minBudget",
+              "value": "={{ $json.body.minBudget }}",
+              "type": "number"
+            },
+            {
+              "id": "ea060963-220c-4f31-be4c-1eebc5b4d1e1",
+              "name": "body.maxBudget",
+              "value": "={{ $json.body.maxBudget }}",
+              "type": "number"
+            },
+            {
+              "id": "d91ee447-9da6-443b-ba05-cca4642e10c6",
+              "name": "body.timeline",
+              "value": "={{ $json.body.timeline }}",
+              "type": "string"
+            },
+            {
+              "id": "a8276c59-bf20-438f-8797-0d9b09a724b0",
+              "name": "body.purpose",
+              "value": "={{ $json.body.purpose }}",
+              "type": "string"
+            },
+            {
+              "id": "b3f02112-0146-426b-bd2d-15b95c82d16d",
+              "name": "body.requirements",
+              "value": "={{ $json.body.requirements }}",
+              "type": "string"
+            },
+            {
+              "id": "880a7064-1b74-418b-8925-69745405b551",
+              "name": "body.contactMethod",
+              "value": "={{ $json.body.contactMethod }}",
+              "type": "string"
+            },
+            {
+              "id": "d30cc027-afba-434b-9e66-28e7ebc319e7",
+              "name": "created_at",
+              "value": "={{ $now }}",
+              "type": "string"
+            },
+            {
+              "id": "9ded18ca-1ca5-4380-a16c-5395269368b2",
+              "name": "body.submission_id",
+              "value": "={{ $json.body.submission_id }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "id": "bd727fd7-88f6-47e8-8216-99225436304f",
+      "name": "Edit Fields",
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.5,
+      "position": [
+        -720,
+        -320
+      ]
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "b35a4190-6cd1-40c3-a2bd-546748ec92ba",
+              "leftValue": "={{ $json.body.fullName }}",
+              "rightValue": "=",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "aea8c4ae-081c-4bc7-bb57-ad49a8f42b1c",
+              "leftValue": "={{ $json.body.email }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "e50d65c4-0895-4c61-97b2-0925af9563f9",
+              "leftValue": "={{ $json.body.phone }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            },
+            {
+              "id": "2c6a596f-0705-4cb9-b6f6-9c9aab6776e6",
+              "leftValue": "={{ $json.body.minBudget }}",
+              "rightValue": 0,
+              "operator": {
+                "type": "number",
+                "operation": "gt"
+              }
+            },
+            {
+              "id": "7c4cef41-ef9e-494b-83a3-a77519db59d3",
+              "leftValue": "={{ $json.body.maxBudget }}",
+              "rightValue": "={{ $json.body.minBudget }}",
+              "operator": {
+                "type": "number",
+                "operation": "gte"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "193823f2-7527-47f7-8eb1-c9496427b1b5",
+      "name": "Validate Property Lead",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        -576,
+        -128
+      ]
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "{\n  \"success\": true,\n  \"message\": \"Your property enquiry has been received.\",\n  \"submission_id\": \"sub_demo_001\"\n}",
+        "options": {}
+      },
+      "id": "90cc74f8-bef5-45fc-8437-57df937df227",
+      "name": "Respond to Webhook",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.5,
+      "position": [
+        2240,
+        -48
+      ]
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=\nYou are a professional real estate sales assistant in India.\n\nWrite a friendly, professional follow-up email for a person\nwho enquired about buying a property.\n\nLEAD DETAILS\nName: {{ $('Calculate Lead Score').item.json.fullName }}\nEmail: {{ $('Calculate Lead Score').item.json.email }}\nPhone: {{ $('Calculate Lead Score').item.json.phone }}\nPreferred location: {{ $('Calculate Lead Score').item.json.location }}\nProperty type: {{ $('Calculate Lead Score').item.json.propertyType }}\nConfiguration: {{ $('Calculate Lead Score').item.json.configuration }}\nMinimum budget (INR): {{ $('Calculate Lead Score').item.json.minBudget }}\nMaximum budget (INR): {{ $('Calculate Lead Score').item.json.maxBudget }}\nTimeline: {{ $('Calculate Lead Score').item.json.timeline }}\nPurpose: {{ $('Calculate Lead Score').item.json.purpose }}\nAdditional requirements: {{ $('Calculate Lead Score').item.json.requirements }}\nLead score: {{ $('Calculate Lead Score').item.json.score }}\nPriority: {{ $('Calculate Lead Score').item.json.priority }}\n\nINSTRUCTIONS\n1. Address the customer by name.\n2. Acknowledge their requested location, property type and budget.\n3. Ask one useful next-step question or offer to arrange a call.\n4. Keep the message concise and natural.\n5. Never invent a property, price, amenity or availability.\n6. Never promise investment returns or property appreciation.\n7. If a verified matching listing has not been provided, do not\n   claim that a suitable property is available.\n8. Do not invent the sales agent's name or company name.\n9. Return only the email body, with a greeting and sign-off.\n10. Do not include a subject line or explanation.\n",
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.9,
+      "position": [
+        1472,
+        272
+      ],
+      "id": "2357c4a4-19a2-4b17-af9c-074f46ea2f56",
+      "name": "HOT Lead follow up"
+    },
+    {
+      "parameters": {
+        "jsCode": "\nconst lead = $json.body ?? $json;\n\nconst timelineScores = {\n  \"Immediately\": 30,\n  \"Within 1 month\": 28,\n  \"Within 3 months\": 22,\n  \"Within 6 months\": 12,\n  \"Just exploring\": 0,\n};\n\nconst minBudget = Number(lead.minBudget);\nconst maxBudget = Number(lead.maxBudget);\n\nconst budgetValid =\n  Number.isFinite(minBudget) &&\n  Number.isFinite(maxBudget) &&\n  minBudget > 0 &&\n  maxBudget >= minBudget;\n\nconst timelineScore = timelineScores[lead.timeline] ?? 0;\nconst budgetScore = budgetValid ? 30 : 0;\nconst propertyScore = lead.propertyType ? 20 : 0;\nconst locationScore = lead.location ? 20 : 0;\n\nconst score =\n  timelineScore +\n  budgetScore +\n  propertyScore +\n  locationScore;\n\nconst priority =\n  score >= 75 ? \"HOT\" :\n  score >= 50 ? \"WARM\" :\n  \"LOW\";\n\nreturn {\n  json: {\n    ...lead,\n    score,\n    priority,\n    status: \"Needs review\"\n  }\n};\n"
+      },
+      "id": "d0972d2a-6f0c-40bf-9edb-e403d527a294",
+      "name": "Calculate Lead Score",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        -400,
+        -304
+      ]
+    },
+    {
+      "parameters": {
+        "rules": {
+          "values": [
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "leftValue": "={{ $json.priority }}",
+                    "rightValue": "HOT",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    },
+                    "id": "6468e3a1-7b3c-4fde-ba82-f25504062262"
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "id": "8cc023cd-806c-4049-9604-157fc815a6d2",
+                    "leftValue": "={{ $json.priority }}",
+                    "rightValue": "WARM",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            },
+            {
+              "conditions": {
+                "options": {
+                  "caseSensitive": true,
+                  "leftValue": "",
+                  "typeValidation": "strict",
+                  "version": 4
+                },
+                "conditions": [
+                  {
+                    "id": "94416ff3-9b40-42fa-91ff-1c9e3e27a58e",
+                    "leftValue": "={{ $json.priority }}",
+                    "rightValue": "LOW",
+                    "operator": {
+                      "type": "string",
+                      "operation": "equals"
+                    }
+                  }
+                ],
+                "combinator": "and"
+              }
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.switch",
+      "typeVersion": 3.5,
+      "position": [
+        1536,
+        0
+      ],
+      "id": "9bf5cf73-20e7-4612-b156-e57280511b6f",
+      "name": "Route Lead Priority"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1.2,
+      "position": [
+        1616,
+        464
+      ],
+      "id": "87f870d2-b00a-4af3-aaec-244f9e4c3637",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": null,
+          "name": "",
+          "__aiGatewayManaged": true
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "draft",
+        "subject": "={{ 'Property enquiry follow-up - ' + $('Calculate Lead Score').item.json.fullName }}",
+        "message": "={{ $json.text }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        1856,
+        256
+      ],
+      "id": "d26d2a38-f7ac-4577-a3d9-d147d575d54a",
+      "name": "Create a draft",
+      "webhookId": "2019a8e5-ee11-4947-b1d0-aecfe4e52d72",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "5Fw1hEnOzmONmw7U",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 2040516716,
+          "mode": "list",
+          "cachedResultName": "Rejected Leads",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=2040516716"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Submi id": "={{ $json.body.submission_id ?? '' }}",
+            "created at": "={{ $now }}",
+            "name": "={{ $json.body.fullName ?? '' }}",
+            "e mail": "={{ $json.body.email ?? '' }}",
+            "phone no.": "={{ $json.body.phone ?? '' }}",
+            "property type": "={{ $json.body.propertyType ?? '' }}",
+            "min bud": "={{ $json.body.minBudget ?? '' }}",
+            "max bud": "={{ $json.body.minBudget ?? '' }}",
+            "Rejection reason": "INvalid data ",
+            "Status ": "Rejected"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Submi id",
+              "displayName": "Submi id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created at",
+              "displayName": "created at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "e mail",
+              "displayName": "e mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone no.",
+              "displayName": "phone no.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": true
+            },
+            {
+              "id": "property type",
+              "displayName": "property type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "min bud",
+              "displayName": "min bud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "max bud",
+              "displayName": "max bud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Rejection reason",
+              "displayName": "Rejection reason",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "Status ",
+              "displayName": "Status ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -288,
+        272
+      ],
+      "id": "9c5fd42b-0754-45ca-8dd2-3f6d5ba5af58",
+      "name": "Append or update row in sheet2",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "Sheet1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=0"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "Submi id",
+              "lookupValue": "={{ $('Calculate Lead Score').item.json.submission_id }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -240,
+        -64
+      ],
+      "id": "2885a8c4-0155-448e-9d25-68364548d230",
+      "name": "Get row(s) in sheet",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "bf3dc765-5955-40ad-a021-98e2326a9781",
+              "leftValue": "={{ $json['Submi id'] }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        -48,
+        -176
+      ],
+      "id": "c18bc634-dde6-4653-b260-87b6690ac050",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 4
+          },
+          "conditions": [
+            {
+              "id": "e1e74ef9-e373-4f4d-aa86-ac362cba9af9",
+              "leftValue": "={{ $json.customer_id }}",
+              "rightValue": "",
+              "operator": {
+                "type": "string",
+                "operation": "notEmpty",
+                "singleValue": true
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.4,
+      "position": [
+        224,
+        64
+      ],
+      "id": "cb637262-f121-4475-a3b8-1fd7ed326e85",
+      "name": "CUSTOMER EXIST?"
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1706351448,
+          "mode": "list",
+          "cachedResultName": "CUSTOMERS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=1706351448"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "customer_id": "={{ $execution.id + '-' + $itemIndex }}",
+            "fullname": "={{ $('Calculate Lead Score').item.json.fullName }}",
+            "email": "={{ $('Calculate Lead Score').item.json.email }}",
+            "phone": "={{ $('Calculate Lead Score').item.json.phone }}",
+            "first_seen_at": "={{ $now.toISO() }}",
+            "last_seen_at": "={{ $now.toISO() }}",
+            "total enquries": "1"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "fullname",
+              "displayName": "fullname",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "phone",
+              "displayName": "phone",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "first_seen_at",
+              "displayName": "first_seen_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "last_seen_at",
+              "displayName": "last_seen_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "total enquries",
+              "displayName": "total enquries",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "df765c80-ba5d-4507-8d19-ab064f2b3970",
+      "name": "CREATE NEW CUSTOMER",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        480,
+        0
+      ],
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1706351448,
+          "mode": "list",
+          "cachedResultName": "CUSTOMERS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=1706351448"
+        },
+        "filtersUI": {
+          "values": [
+            {
+              "lookupColumn": "email",
+              "lookupValue": "={{ $('Calculate Lead Score').item.json.email }}"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        0,
+        80
+      ],
+      "id": "52af7a9b-0a52-4929-9ad6-8ca8e0ba5c69",
+      "name": "Find Existing Customer",
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "update",
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": 1706351448,
+          "mode": "list",
+          "cachedResultName": "CUSTOMERS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=1706351448"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "customer_id": "={{ $execution.id + '-' + $itemIndex }}",
+            "fullname": "={{ $('Calculate Lead Score').item.json.fullName }}",
+            "email": "={{ $('Calculate Lead Score').item.json.email }}",
+            "first_seen_at": "={{ $now.toISO() }}",
+            "last_seen_at": "={{ $now.toISO() }}",
+            "total enquries": "={{ Number($('Find Existing Customer').item.json[\"total enquries\"] || 0) + 1 }}",
+            "phone number": "={{ $('Calculate Lead Score').item.json.phone }}"
+          },
+          "matchingColumns": [
+            "customer_id"
+          ],
+          "schema": [
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "fullname",
+              "displayName": "fullname",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "email",
+              "displayName": "email",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone number",
+              "displayName": "phone number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "first_seen_at",
+              "displayName": "first_seen_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "last_seen_at",
+              "displayName": "last_seen_at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "total enquries",
+              "displayName": "total enquries",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "row_number",
+              "displayName": "row_number",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true,
+              "readOnly": true,
+              "removed": true
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "01386721-2a95-4671-99a2-fc34165e28bd",
+      "name": "CREATE NEW CUSTOMER1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        416,
+        -304
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "LEADS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "customer_id": "={{ $execution.id + '-' + $itemIndex }}",
+            "Submi id": "={{ $('Calculate Lead Score').item.json.submission_id }}",
+            "created at": "={{ $now}} ",
+            "name": "={{ $('Calculate Lead Score').item.json.fullName }}",
+            "e mail": "={{ $('Calculate Lead Score').item.json.email }}",
+            "property type": "={{ $('Calculate Lead Score').item.json.propertyType }}",
+            "max budge": "={{ $('Calculate Lead Score').item.json.maxBudget }}",
+            "min bud": "={{ $('Calculate Lead Score').item.json.minBudget }}",
+            "configuration ": "={{ $('Calculate Lead Score').item.json.configuration }}",
+            "location": "={{ $('Calculate Lead Score').item.json.location }}",
+            "phone no.": "={{ $('Calculate Lead Score').item.json.phone }}",
+            "timeline": "={{ $('Calculate Lead Score').item.json.timeline }}",
+            "purpose": "={{ $('Calculate Lead Score').item.json.purpose }}",
+            "score": "={{ $('Calculate Lead Score').item.json.score }}",
+            "priority": "={{ $('Calculate Lead Score').item.json.priority }}",
+            "status": "={{ $('Calculate Lead Score').item.json.status }}"
+          },
+          "matchingColumns": [
+            "customer_id"
+          ],
+          "schema": [
+            {
+              "id": "Submi id",
+              "displayName": "Submi id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created at",
+              "displayName": "created at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "e mail",
+              "displayName": "e mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone no.",
+              "displayName": "phone no.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "property type",
+              "displayName": "property type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "configuration ",
+              "displayName": "configuration ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "min bud",
+              "displayName": "min bud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "max budge",
+              "displayName": "max budge",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "timeline",
+              "displayName": "timeline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "purpose",
+              "displayName": "purpose",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "990f7e3d-a37b-4c28-b315-0fc2199fd458",
+      "name": "SAVE LEAD",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        752,
+        -208
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "LEADS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "customer_id": "={{ $execution.id + '-' + $itemIndex }}",
+            "Submi id": "={{ $('Calculate Lead Score').item.json.submission_id }}",
+            "created at": "={{ $now}} ",
+            "name": "={{ $('Calculate Lead Score').item.json.fullName }}",
+            "e mail": "={{ $('Calculate Lead Score').item.json.email }}",
+            "property type": "={{ $('Calculate Lead Score').item.json.propertyType }}",
+            "max budge": "={{ $('Calculate Lead Score').item.json.maxBudget }}",
+            "min bud": "={{ $('Calculate Lead Score').item.json.minBudget }}",
+            "configuration ": "={{ $('Calculate Lead Score').item.json.configuration }}",
+            "location": "={{ $('Calculate Lead Score').item.json.location }}",
+            "phone no.": "={{ $('Calculate Lead Score').item.json.phone }}",
+            "timeline": "={{ $('Calculate Lead Score').item.json.timeline }}",
+            "purpose": "={{ $('Calculate Lead Score').item.json.purpose }}",
+            "score": "={{ $('Calculate Lead Score').item.json.score }}",
+            "priority": "={{ $('Calculate Lead Score').item.json.priority }}",
+            "status": "={{ $('Calculate Lead Score').item.json.status }}"
+          },
+          "matchingColumns": [
+            "customer_id"
+          ],
+          "schema": [
+            {
+              "id": "Submi id",
+              "displayName": "Submi id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created at",
+              "displayName": "created at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "e mail",
+              "displayName": "e mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone no.",
+              "displayName": "phone no.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "property type",
+              "displayName": "property type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "configuration ",
+              "displayName": "configuration ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "min bud",
+              "displayName": "min bud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "max budge",
+              "displayName": "max budge",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "timeline",
+              "displayName": "timeline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "purpose",
+              "displayName": "purpose",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "id": "e2eb527b-38ad-4fb8-9722-b6032610fd47",
+      "name": "SAVE LEAD1",
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        784,
+        64
+      ],
+      "alwaysOutputData": true,
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "appendOrUpdate",
+        "documentId": {
+          "__rl": true,
+          "value": "1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ",
+          "mode": "list",
+          "cachedResultName": "LEAD QUAL SHEET P1",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit?usp=drivesdk"
+        },
+        "sheetName": {
+          "__rl": true,
+          "value": "gid=0",
+          "mode": "list",
+          "cachedResultName": "LEADS",
+          "cachedResultUrl": "https://docs.google.com/spreadsheets/d/1LifaDrh3gFxFYlPxptRfmBwhFouu5fChbnlykx-a1UQ/edit#gid=0"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "priority": "={{ $('SAVE LEAD').item.json.priority }}",
+            "score": "={{ $('SAVE LEAD').item.json.score }}",
+            "purpose": "={{ $('SAVE LEAD').item.json.purpose }}",
+            "max budge": "={{ $('SAVE LEAD').item.json['max budge'] }}",
+            "min bud": "={{ $('SAVE LEAD').item.json['min bud'] }}",
+            "timeline": "={{ $('SAVE LEAD').item.json.timeline }}",
+            "configuration ": "={{ $('SAVE LEAD').item.json['configuration '] }}",
+            "property type": "={{ $('SAVE LEAD').item.json['property type'] }}",
+            "phone no.": "={{ $('SAVE LEAD').item.json['phone no.'] }}",
+            "e mail": "={{ $('SAVE LEAD').item.json['e mail'] }}",
+            "location": "={{ $('SAVE LEAD').item.json.location }}",
+            "name": "={{ $('SAVE LEAD').item.json.name }}",
+            "created at": "={{ $('SAVE LEAD').item.json['created at'] }}",
+            "Submi id": "={{ $('SAVE LEAD').item.json['Submi id'] }}",
+            "status": "Draft Created",
+            "customer_id": "={{ $('SAVE LEAD').item.json.customer_id }}"
+          },
+          "matchingColumns": [
+            "Submi id"
+          ],
+          "schema": [
+            {
+              "id": "Submi id",
+              "displayName": "Submi id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "created at",
+              "displayName": "created at",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "name",
+              "displayName": "name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "e mail",
+              "displayName": "e mail",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "phone no.",
+              "displayName": "phone no.",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "location",
+              "displayName": "location",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "property type",
+              "displayName": "property type",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "configuration ",
+              "displayName": "configuration ",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "min bud",
+              "displayName": "min bud",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "max budge",
+              "displayName": "max budge",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "timeline",
+              "displayName": "timeline",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "purpose",
+              "displayName": "purpose",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "score",
+              "displayName": "score",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "priority",
+              "displayName": "priority",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "status",
+              "displayName": "status",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            },
+            {
+              "id": "customer_id",
+              "displayName": "customer_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        2048,
+        272
+      ],
+      "id": "8f00f9b3-f8c7-414d-b6bd-7603b20b285c",
+      "name": "Append or update row in sheet",
+      "credentials": {
+        "googleSheetsOAuth2Api": {
+          "id": "fcnpPaYDiRFebN0U",
+          "name": "Google Sheets account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Edit Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Edit Fields": {
+      "main": [
+        [
+          {
+            "node": "Validate Property Lead",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Validate Property Lead": {
+      "main": [
+        [
+          {
+            "node": "Calculate Lead Score",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Append or update row in sheet2",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calculate Lead Score": {
+      "main": [
+        [
+          {
+            "node": "Get row(s) in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Route Lead Priority": {
+      "main": [
+        [
+          {
+            "node": "HOT Lead follow up",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [],
+        []
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "HOT Lead follow up",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "HOT Lead follow up": {
+      "main": [
+        [
+          {
+            "node": "Create a draft",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Create a draft": {
+      "main": [
+        [
+          {
+            "node": "Append or update row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get row(s) in sheet": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [],
+        [
+          {
+            "node": "Find Existing Customer",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CUSTOMER EXIST?": {
+      "main": [
+        [
+          {
+            "node": "CREATE NEW CUSTOMER1",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "CREATE NEW CUSTOMER",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREATE NEW CUSTOMER": {
+      "main": [
+        [
+          {
+            "node": "SAVE LEAD1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Find Existing Customer": {
+      "main": [
+        [
+          {
+            "node": "CUSTOMER EXIST?",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "CREATE NEW CUSTOMER1": {
+      "main": [
+        [
+          {
+            "node": "SAVE LEAD",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SAVE LEAD": {
+      "main": [
+        [
+          {
+            "node": "Route Lead Priority",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SAVE LEAD1": {
+      "main": [
+        [
+          {
+            "node": "Route Lead Priority",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "bdc68892-d61c-47d2-81d8-bda3b721390f",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "ec5a996325576cb71042213bf9d74b9d57c5d5a29c8b2f8fc61738977b3ffba3"
+  },
+  "nodeGroups": [],
+  "id": "ZNHGafCXyV2uoi3S",
+  "tags": []
+}
